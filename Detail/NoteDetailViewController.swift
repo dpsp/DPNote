@@ -20,7 +20,9 @@ class NoteDetailViewController: UIViewController {
         super.viewDidLoad()
 
         if let photo = note?.photo {
-            imageView.image = UIImage.loadLocalImage(with: photo)
+            if let image = UIImage.loadLocalImage(with: photo) {
+                imageView.image = image
+            }
         } else {
             let button = UIButton.init(frame: CGRect.init(x: 0, y: 0, width: 44, height: 44))
             button.setTitleColor(UIColor.gray, for: .normal)

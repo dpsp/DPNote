@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B3g-jB-BAA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B3g-jB-BAA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -59,7 +59,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="addNewNoteUpdateInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cES-cT-Cc3"/>
+                                    <segue destination="qHT-qK-GWA" kind="show" id="y8i-cB-zZT"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -110,6 +110,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gpW-U1-tL5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1237" y="-192"/>
+        </scene>
+        <!--Add Note View Controller-->
+        <scene sceneID="8IJ-ge-lsk">
+            <objects>
+                <viewController id="qHT-qK-GWA" customClass="AddNoteViewController" customModule="DPNote" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YTn-rt-bfz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vZ1-oB-Nq5">
+                                <rect key="frame" x="0.0" y="64" width="331" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="E0X-69-Sso"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ckw-eQ-ZGL">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="X7V-ES-OlI">
+                                <rect key="frame" x="331" y="64" width="44" height="44"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vci-5t-CJi">
+                                <rect key="frame" x="331" y="64" width="44" height="44"/>
+                                <state key="normal" title="Image"/>
+                                <connections>
+                                    <action selector="addPhotoTouchUpInside:" destination="qHT-qK-GWA" eventType="touchUpInside" id="EvA-7d-Esr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ckw-eQ-ZGL" firstAttribute="leading" secondItem="Jpo-RH-MMO" secondAttribute="leading" id="Dqb-u3-a4u"/>
+                            <constraint firstItem="Jpo-RH-MMO" firstAttribute="trailing" secondItem="vZ1-oB-Nq5" secondAttribute="trailing" constant="44" id="JH5-S3-fg2"/>
+                            <constraint firstItem="Vci-5t-CJi" firstAttribute="top" secondItem="Jpo-RH-MMO" secondAttribute="top" id="MWV-6o-DRv"/>
+                            <constraint firstItem="X7V-ES-OlI" firstAttribute="height" secondItem="Vci-5t-CJi" secondAttribute="height" id="SpU-bY-TH7"/>
+                            <constraint firstItem="Vci-5t-CJi" firstAttribute="trailing" secondItem="Jpo-RH-MMO" secondAttribute="trailing" id="YTN-il-lkh"/>
+                            <constraint firstItem="Jpo-RH-MMO" firstAttribute="bottom" secondItem="ckw-eQ-ZGL" secondAttribute="bottom" id="Zm8-57-y5s"/>
+                            <constraint firstItem="ckw-eQ-ZGL" firstAttribute="top" secondItem="vZ1-oB-Nq5" secondAttribute="bottom" id="aeh-UG-0Qb"/>
+                            <constraint firstItem="vZ1-oB-Nq5" firstAttribute="leading" secondItem="Jpo-RH-MMO" secondAttribute="leading" id="dMF-tc-PWA"/>
+                            <constraint firstItem="X7V-ES-OlI" firstAttribute="centerX" secondItem="Vci-5t-CJi" secondAttribute="centerX" id="kAh-Sk-8P7"/>
+                            <constraint firstItem="X7V-ES-OlI" firstAttribute="centerY" secondItem="Vci-5t-CJi" secondAttribute="centerY" id="mMc-6q-oZs"/>
+                            <constraint firstItem="vZ1-oB-Nq5" firstAttribute="top" secondItem="Jpo-RH-MMO" secondAttribute="top" id="mbV-xP-AB9"/>
+                            <constraint firstItem="ckw-eQ-ZGL" firstAttribute="top" secondItem="Vci-5t-CJi" secondAttribute="bottom" id="r0M-bs-iZf"/>
+                            <constraint firstItem="Jpo-RH-MMO" firstAttribute="trailing" secondItem="ckw-eQ-ZGL" secondAttribute="trailing" id="t3C-Mh-EUn"/>
+                            <constraint firstItem="X7V-ES-OlI" firstAttribute="width" secondItem="Vci-5t-CJi" secondAttribute="width" id="vRU-oK-y0Q"/>
+                            <constraint firstItem="Vci-5t-CJi" firstAttribute="leading" secondItem="vZ1-oB-Nq5" secondAttribute="trailing" id="yq7-EK-ruK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Jpo-RH-MMO"/>
+                    </view>
+                    <connections>
+                        <outlet property="contentTextView" destination="ckw-eQ-ZGL" id="oO7-Pt-feG"/>
+                        <outlet property="imagePreview" destination="X7V-ES-OlI" id="OSg-h9-m26"/>
+                        <outlet property="titleTextField" destination="vZ1-oB-Nq5" id="Kuk-ve-Gwo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Tu-Tq-0Nl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1236" y="579.76011994002999"/>
         </scene>
         <!--Note Detail View Controller-->
         <scene sceneID="ktf-MX-MRy">

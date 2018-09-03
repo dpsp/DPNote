@@ -79,7 +79,7 @@ extension NoteListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let note = list[indexPath.row]
-        cell.textLabel?.text = "\(indexPath.row) \(note.timestamp)"
+        cell.textLabel?.text = "\(indexPath.row) \(note.title ?? "")"
         
         return cell
     }
@@ -91,6 +91,23 @@ extension NoteListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let note = list[indexPath.row]
         performSegue(withIdentifier: "segueToDetail", sender: note)
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let note = list.remove(at: indexPath.row)
+        if let context = DPPersistentContainer.instance.persistentContainer?.viewContext {
+            context.delete(note)
+            do {
+                try context.save()
+            } catch {
+                
+            }
+        }
+        tableView.reloadData()
     }
     
 }
