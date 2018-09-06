@@ -18,6 +18,7 @@ class AddNoteViewController: UIViewController {
     @IBOutlet weak var imagePreview: UIImageView!
     
     var photo: String?
+    var note: NyanNote?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ class AddNoteViewController: UIViewController {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         })
         alertViewController.addAction(cameraAction)
@@ -55,7 +56,7 @@ class AddNoteViewController: UIViewController {
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .camera
             imagePicker.delegate = self
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         })
         alertViewController.addAction(albumAction)
@@ -81,6 +82,8 @@ class AddNoteViewController: UIViewController {
             
             do {
                 try context.save()
+                view.isUserInteractionEnabled = false
+                
                 view.makeToast("保存成功")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                     self?.navigationController?.popViewController(animated: true)
@@ -100,7 +103,7 @@ extension AddNoteViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.photo = image.saveTempImage()
             
             let path = NSTemporaryDirectory() as NSString

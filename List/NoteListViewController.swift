@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 import MJRefresh
+import Toast
 
 class NoteListViewController: UIViewController {
 
@@ -28,7 +29,9 @@ class NoteListViewController: UIViewController {
         footer.setRefreshingTarget(self, refreshingAction: #selector(load))
         tableView.mj_footer = footer
 
-        load()
+        DispatchQueue.global().async {
+            self.load()
+        }
     }
     
     @objc func load() {
@@ -39,20 +42,23 @@ class NoteListViewController: UIViewController {
         fetchRequest.fetchLimit = 10
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: (DPPersistentContainer.instance.persistentContainer?.viewContext)!, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
-        do {
-            try fetchedResultsController.performFetch()
-            if let notes = fetchedResultsController.fetchedObjects as? [NyanNote] {
-                list.append(contentsOf: notes)
-                tableView.reloadData()
-                
-                if notes.count == 0 {
-                    tableView.mj_footer.endRefreshingWithNoMoreData()
-                } else {
-                    tableView.mj_footer.endRefreshing()
+        
+        DispatchQueue.main.async {
+            do {
+                try fetchedResultsController.performFetch()
+                if let notes = fetchedResultsController.fetchedObjects as? [NyanNote] {
+                    self.list.append(contentsOf: notes)
+                    self.tableView.reloadData()
+                    
+                    if notes.count == 0 {
+                        self.tableView.mj_footer.endRefreshingWithNoMoreData()
+                    } else {
+                        self.tableView.mj_footer.endRefreshing()
+                    }
                 }
+            } catch {
+                self.tableView.mj_footer.endRefreshing()
             }
-        } catch {
-            tableView.mj_footer.endRefreshing()
         }
     }
     
@@ -99,14 +105,28 @@ extension NoteListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let note = list.remove(at: indexPath.row)
+        
+        do {
+            if let name = note.photo {
+                let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+                let imagePath = path.appendingPathComponent("\(name).jpg")
+                try FileManager().removeItem(atPath: imagePath)
+            }
+        } catch {
+            view.makeToast(error.localizedDescription)
+        }
+        
         if let context = DPPersistentContainer.instance.persistentContainer?.viewContext {
             context.delete(note)
             do {
                 try context.save()
-            } catch {
                 
+                view.makeToast("删除成功")
+            } catch {
+                view.makeToast(error.localizedDescription)
             }
         }
+        
         tableView.reloadData()
     }
     
